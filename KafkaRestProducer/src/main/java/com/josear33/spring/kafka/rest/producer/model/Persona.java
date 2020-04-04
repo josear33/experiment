@@ -1,8 +1,8 @@
 package com.josear33.spring.kafka.rest.producer.model;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
+
+import org.apache.commons.codec.digest.DigestUtils;
 
 public class Persona {
 
@@ -20,8 +20,8 @@ public class Persona {
 	private Boolean tos=false;
 	private Boolean sequedad=false;
 	private Boolean mucosidad=false;
-	private Date fechaControl=(new SimpleDateFormat("DD/MM/YYYY HH:mm:ss")).getCalendar().getTime();
-	
+	private Date fechaControl;
+
 	public String getNombre() {
 		return nombre;
 	}
@@ -68,7 +68,7 @@ public class Persona {
 		return uid;
 	}
 	public void setUid(String uid) {
-		this.uid = uid;
+		this.uid = DigestUtils.sha256Hex(this.getNombre()+this.getApellido1()+this.getApellido2()+this.getEmail()+this.getTelefono1());
 	}
 	public Double getFiebre() {
 		return fiebre;
@@ -111,6 +111,5 @@ public class Persona {
 	}
 	public void setFechaControl(Date fechaControl) {
 		this.fechaControl = fechaControl;
-	}
-		
+	}	
 }

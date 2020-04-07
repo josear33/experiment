@@ -1,9 +1,12 @@
 package com.josear33.spring.kafka.rest.producer.service;
 
+import java.util.Calendar;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -11,6 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.josear33.spring.kafka.rest.producer.model.Persona;
 
 @Service
+@Async
 public class Producer {
 
 	private static final Logger logger = LoggerFactory.getLogger(Producer.class);
@@ -30,6 +34,7 @@ public class Producer {
 	public void sendDiagFollowup(Persona persona) {
 		try {
 			logger.info(String.format("#### -> Producing message -> %s", objectMapper.writeValueAsString(persona)));
+			persona.setFechaControl(Calendar.getInstance().getTime());
 			this.kafkaTemplate.send(TOPIC,  objectMapper.writeValueAsString(persona));
 		} catch (JsonProcessingException e) {
 			logger.error(e.getStackTrace().toString());			

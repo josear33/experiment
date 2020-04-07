@@ -21,6 +21,7 @@ public class Persona {
 	private Boolean sequedad=false;
 	private Boolean mucosidad=false;
 	private Date fechaControl;
+	private String ciudad;
 
 	public String getNombre() {
 		return nombre;
@@ -111,5 +112,11 @@ public class Persona {
 	}
 	public void setFechaControl(Date fechaControl) {
 		this.fechaControl = fechaControl;
+	}
+	public String getCiudad() {
+		return ciudad;
+	}
+	public void setCiudad(String ciudad) {
+		this.ciudad = ciudad;
 	}	
 }

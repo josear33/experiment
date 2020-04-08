@@ -34,7 +34,6 @@ public class Producer {
 	public void sendDiagFollowup(Persona persona) {
 		try {
 			logger.info(String.format("#### -> Producing message -> %s", objectMapper.writeValueAsString(persona)));
-			persona.setFechaControl(Calendar.getInstance().getTime());
 			this.kafkaTemplate.send(TOPIC,  objectMapper.writeValueAsString(persona));
 		} catch (JsonProcessingException e) {
 			logger.error(e.getStackTrace().toString());			

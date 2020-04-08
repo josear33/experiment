@@ -1,5 +1,7 @@
 package com.josear33.spring.kafka.rest.producer.controller;
 
+import java.util.Calendar;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.josear33.spring.kafka.rest.producer.model.Persona;
 import com.josear33.spring.kafka.rest.producer.service.Producer;
+
+import me.xdrop.jrand.JRand;
 
 @RestController
 @RequestMapping(value = "/kafka")
@@ -28,6 +32,23 @@ public class KafkaController {
     
     @PostMapping(value = "/followup")
     public void sendDiagFollowupToKafkaTopic(@RequestBody Persona persona) {
-        this.producer.sendDiagFollowup(persona);
+        this.producer.sendDiagFollowup(randomizeData(persona));
+    }
+    
+    private Persona randomizeData(Persona persona) {
+    	persona.setFechaControl(Calendar.getInstance().getTime());
+    	persona.setNombre(JRand.firstname().gen());
+    	persona.setApellido1(JRand.name().gen());
+    	persona.setApellido2(JRand.name().gen());
+    	persona.setEdad(JRand.age().gen());
+    	persona.setCiudad(JRand.city().country("Spain").gen());
+    	persona.setCovidPositivo(JRand.bool().gen());
+    	persona.setFiebre(JRand.dbl().min(36D).max(43D).gen());
+    	persona.setEsRiesgo(JRand.bool().gen());
+    	persona.setMucosidad(JRand.bool().gen());
+    	persona.setEmail(JRand.string().gen());
+    	persona.setTos(JRand.bool().gen());
+    	persona.setTelefono1(JRand.phone().mobile().gen());
+    	return persona;
     }
 }

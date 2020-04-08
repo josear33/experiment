@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.josear33.spring.kafka.spark.service.CalculateRiskService;
 import com.josear33.spring.kafka.spark.service.KafkaConsumer;
 
 @SpringBootApplication

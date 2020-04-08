@@ -16,12 +16,12 @@ import me.xdrop.jrand.JRand;
 
 @RestController
 @RequestMapping(value = "/kafka")
-public class KafkaController {
+public class KafkaRestController {
 
     private final Producer producer;
 
     @Autowired
-    KafkaController(Producer producer) {
+    KafkaRestController(Producer producer) {
         this.producer = producer;
     }
 
@@ -33,6 +33,7 @@ public class KafkaController {
     @PostMapping(value = "/followup")
     public void sendDiagFollowupToKafkaTopic(@RequestBody Persona persona) {
         this.producer.sendDiagFollowup(randomizeData(persona));
+        
     }
     
     private Persona randomizeData(Persona persona) {
@@ -40,7 +41,7 @@ public class KafkaController {
     	persona.setNombre(JRand.firstname().gen());
     	persona.setApellido1(JRand.name().gen());
     	persona.setApellido2(JRand.name().gen());
-    	persona.setEdad(JRand.age().gen());
+    	persona.setEdad(JRand.age().gen().doubleValue());
     	persona.setCiudad(JRand.city().country("Spain").gen());
     	persona.setCovidPositivo(JRand.bool().gen());
     	persona.setFiebre(JRand.dbl().min(36D).max(43D).gen());

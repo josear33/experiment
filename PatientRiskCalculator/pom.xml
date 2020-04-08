@@ -47,13 +47,18 @@
 		<dependency>
 			<groupId>org.springframework.kafka</groupId>
 			<artifactId>spring-kafka-test</artifactId>
-			<scope>test</scope>
+						<exclusions>
+				<exclusion>
+					<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-scala -->
+					<groupId>com.fasterxml.jackson.module</groupId>
+					<artifactId>jackson-module-scala_2.12</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.spark</groupId>
 			<artifactId>spark-core_2.11</artifactId>
 			<version>2.4.5</version>
-<<<<<<< HEAD
 			<exclusions>
 				<exclusion>
 					<groupId>org.apache.xbean</groupId>
@@ -66,7 +71,6 @@
 			<groupId>org.apache.spark</groupId>
 			<artifactId>spark-mllib_2.11</artifactId>
 			<version>2.4.5</version>
-			<scope>runtime</scope>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.apache.spark/spark-sql -->
@@ -79,7 +83,9 @@
 					<artifactId>janino</artifactId>
 					<groupId>org.codehaus.janino</groupId>
 				</exclusion>
+
 			</exclusions>
+
 		</dependency>
 		<dependency>
 			<groupId>org.codehaus.janino</groupId>
@@ -96,8 +102,6 @@
 			<groupId>org.scala-lang</groupId>
 			<artifactId>scala-reflect</artifactId>
 			<version>2.11.12</version>
-		</dependency>
-=======
 		</dependency>
 		<dependency>
 			<groupId>org.apache.spark</groupId>
@@ -117,9 +121,13 @@
 			<artifactId>spark-streaming-kafka-0-10_2.11</artifactId>
 			<version>2.4.5</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.10.3</version>
+		</dependency>
 
-
->>>>>>> branch 'master' of https://github.com/josear33/experiment
 	</dependencies>
 
 	<build>

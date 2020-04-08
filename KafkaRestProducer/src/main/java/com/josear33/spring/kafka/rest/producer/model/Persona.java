@@ -12,7 +12,7 @@ public class Persona {
 	private String email="";
 	private String telefono1="";
 	private String telefono2="";
-	private Integer edad;
+	private Double edad;
 	private String uid="";
 	private Double fiebre;
 	private Boolean covidPositivo=false;
@@ -22,6 +22,7 @@ public class Persona {
 	private Boolean mucosidad=false;
 	private Date fechaControl;
 	private String ciudad;
+	private Double riskScoring;
 
 	public String getNombre() {
 		return nombre;
@@ -59,10 +60,10 @@ public class Persona {
 	public void setTelefono2(String telefono2) {
 		this.telefono2 = telefono2;
 	}
-	public Integer getEdad() {
+	public Double getEdad() {
 		return edad;
 	}
-	public void setEdad(Integer edad) {
+	public void setEdad(Double edad) {
 		this.edad = edad;
 	}
 	public String getUid() {
@@ -118,5 +119,11 @@ public class Persona {
 	}
 	public void setCiudad(String ciudad) {
 		this.ciudad = ciudad;
+	}
+	public Double getRiskScoring() {
+		return riskScoring;
+	}
+	public void setRiskScoring(Double riskScoring) {
+		this.riskScoring = riskScoring;
 	}	
 }

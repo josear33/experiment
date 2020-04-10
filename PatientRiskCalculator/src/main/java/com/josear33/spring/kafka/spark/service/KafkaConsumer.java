@@ -2,6 +2,8 @@ package com.josear33.spring.kafka.spark.service;
 
 import java.io.IOException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
@@ -13,10 +15,19 @@ public class KafkaConsumer {
 	CalculateRiskService riskService;
 	@Autowired
 	KafkaProducer producerService;
+	private final Logger logger = LoggerFactory.getLogger(KafkaConsumer.class);
+
 
 	@KafkaListener(topics = "calculateRisk", groupId = "group_id")
-	public void consume(String message) throws IOException {
+	public void calculateRisk(String message) throws IOException {
+		logger.info(String.format("#### -> Consuming message -> %s", message));
 		producerService.publishCalculatedRisk(riskService.getRiskScoring(message));
 
+	}
+	
+	@KafkaListener(topics = "trainModel", groupId = "group_id")
+	public void trainModel(String message) throws IOException {
+		logger.info(String.format("#### -> Consuming message -> %s", message));
+		producerService.publishTrainModel(riskService.trainModel(message));
 	}
 }

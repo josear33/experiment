@@ -23,4 +23,9 @@ public class KafkaProducer {
 		logger.info(String.format("#### -> Producing message -> %s", persona));
 		this.kafkaTemplate.send(ApplicationConstants.RISKTOPIC, persona);
 	}
+	
+	public void publishTrainModel(String dataset) {
+		logger.info(String.format("#### -> Producing message -> %s", dataset));
+		this.kafkaTemplate.send(ApplicationConstants.TRAINMODEL, ApplicationConstants.MODELTRAINED);
+	}
 }

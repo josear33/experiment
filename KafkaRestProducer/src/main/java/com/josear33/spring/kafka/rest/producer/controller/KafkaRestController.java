@@ -42,7 +42,7 @@ public class KafkaRestController {
     	persona.setApellido1(JRand.name().gen());
     	persona.setApellido2(JRand.name().gen());
     	persona.setEdad(JRand.age().gen().doubleValue());
-    	persona.setCiudad(JRand.city().country("Spain").gen());
+    	persona.setCiudad(JRand.city().country("Spain").genString());
     	persona.setCovidPositivo(JRand.bool().gen());
     	persona.setFiebre(JRand.dbl().min(36D).max(43D).gen());
     	persona.setEsRiesgo(JRand.bool().gen());

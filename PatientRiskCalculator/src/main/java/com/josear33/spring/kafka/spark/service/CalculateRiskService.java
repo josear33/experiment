@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Encoders;
-import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SQLContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,14 +22,17 @@ public class CalculateRiskService {
 	private SparkClusteringService sparkClusteringService;
 
 	public String getRiskScoring(String persona) {
-//		Dataset<Row> message = sqlContext.read().format("kafka").option("kafka.bootstrap.servers", "localhost:9092")
-//				.option("subscribe", "users").load();
-
+		logger.info("Begin clustering");
 		List<String> data = new ArrayList<String>();
 		data.add(persona);
 		Dataset<String> df = sqlc.createDataset(data, Encoders.STRING());
-		Dataset<Row> formattedDs = sqlc.read().json(df);
-		sparkClusteringService.clusterPredict(formattedDs).write().json("tempRow");
-		return sqlc.read().json("tempRow").toDF().as(Encoders.STRING()).first();
+		return sparkClusteringService.clusterPredict(sqlc.read().json(df)).toDF().toJSON().first();
+	}
+	
+	public String trainModel(String persona) {
+//		Dataset<Row> message = sqlContext.read().format("kafka").option("kafka.bootstrap.servers", "localhost:9092")
+//				.option("subscribe", "users").load();
+		logger.info("Begin training");
+		return "SUCCESS";
 	}
 }

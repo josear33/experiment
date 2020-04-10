@@ -9,6 +9,8 @@ import org.apache.spark.ml.feature.VectorAssembler;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SQLContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,47 +18,37 @@ import org.springframework.stereotype.Service;
 public class SparkClusteringService {
 
 	@Autowired
-	private SQLContext sqlc;
-	@Autowired
 	private KMeans model;
-	
+
 	private PipelineModel trainedModel = null;
-	
+
+	private final Logger logger = LoggerFactory.getLogger(SparkClusteringService.class);
 
 	public Dataset<Row> clusterPredict(Dataset<Row> dataset) {
-//		dataset = dataset.withColumn("features",functions.array(dataset.col("fiebre")));
-//
-//		StringIndexer gindexer = new StringIndexer().setInputCol("ciudad").setOutputCol("ciudadIndex");
-//		OneHotEncoderEstimator gencoder = new OneHotEncoderEstimator().setInputCols(new String[] { "ciudadIndex" })
-//				.setOutputCols(new String[] { "ciudadVec" });
-		
-		if (trainedModel.equals(null)) clusterTrain(dataset);
+		if (trainedModel == null) {
+			logger.info("Model needs training");
+			clusterTrain(dataset);
+		}
 		return predict(dataset);
 	}
-	
-	private Dataset<Row> predict(Dataset<Row> dataset) {
-//		dataset = dataset.withColumn("features",functions.array(dataset.col("fiebre")));
-//
-//		StringIndexer gindexer = new StringIndexer().setInputCol("ciudad").setOutputCol("ciudadIndex");
-//		OneHotEncoderEstimator gencoder = new OneHotEncoderEstimator().setInputCols(new String[] { "ciudadIndex" })
-//				.setOutputCols(new String[] { "ciudadVec" });
 
+	private Dataset<Row> predict(Dataset<Row> dataset) {
+		logger.info("Clustering data");
 		return trainedModel.transform(dataset);
 	}
-	
-	private void clusterTrain(Dataset<Row> dataset) {
+
+	public void clusterTrain(Dataset<Row> dataset) {
 //		dataset = dataset.withColumn("features",functions.array(dataset.col("fiebre")));
 
 //		StringIndexer gindexer = new StringIndexer().setInputCol("ciudad").setOutputCol("ciudadIndex");
 //		OneHotEncoderEstimator gencoder = new OneHotEncoderEstimator().setInputCols(new String[] { "ciudadIndex" })
 //				.setOutputCols(new String[] { "ciudadVec" });
-
+		logger.info("Begin training");
 		VectorAssembler assembler = new VectorAssembler()
-				.setInputCols(
-						new String[] { "ciudadVec", "edad", "fiebre", "covidPositivo", "tos", "mucosidad", "sequedad" })
+				.setInputCols(new String[] { "edad", "fiebre", "covidPositivo", "tos", "mucosidad", "sequedad" })
 				.setOutputCol("features");
 		Pipeline pipe = new Pipeline().setStages(new PipelineStage[] { assembler, model });
 		trainedModel = pipe.fit(dataset);
-		// return modelFit.transform(dataset);
+		logger.info("Model trained");
 	}
 }

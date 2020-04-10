@@ -121,6 +121,7 @@
 			<artifactId>spark-streaming-kafka-0-10_2.11</artifactId>
 			<version>2.4.5</version>
 		</dependency>
+<<<<<<< HEAD
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -128,6 +129,8 @@
 			<version>2.10.3</version>
 		</dependency>
 
+=======
+>>>>>>> refs/remotes/origin/master
 	</dependencies>
 
 	<build>

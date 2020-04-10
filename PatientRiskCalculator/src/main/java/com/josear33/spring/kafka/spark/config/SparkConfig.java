@@ -42,11 +42,6 @@ public class SparkConfig {
 	}
 
 	@Bean
-	public KMeansModel trainedModel() {
-		return KMeansModel.load("");
-	}
-	
-	@Bean
 	public SQLContext sqlc() {
 		return new SQLContext(SparkSession.builder().config(conf()).getOrCreate());
 	}

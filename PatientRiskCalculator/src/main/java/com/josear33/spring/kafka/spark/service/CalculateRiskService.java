@@ -1,9 +1,5 @@
 package com.josear33.spring.kafka.spark.service;
-<<<<<<< HEAD
 
-=======
-
->>>>>>> refs/remotes/origin/master
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,18 +28,9 @@ public class CalculateRiskService {
 
 		List<String> data = new ArrayList<String>();
 		data.add(persona);
-<<<<<<< HEAD
 		Dataset<String> df = sqlc.createDataset(data, Encoders.STRING());
 		Dataset<Row> formattedDs = sqlc.read().json(df);
 		sparkClusteringService.clusterPredict(formattedDs).write().json("tempRow");
 		return sqlc.read().json("tempRow").toDF().as(Encoders.STRING()).first();
-//		return 60 + (long) (Math.random() * (60 - 100));
 	}
-=======
-		Dataset<String> df = sqlc.createDataset(data,Encoders.STRING());
-		
-		logger.info(String.format("####-#### -> Spark response from kafka -> %s", df.first()+": "+df.count()));
-		return 60 + (long) (Math.random() * (60 - 100));
-}
->>>>>>> refs/remotes/origin/master
 }

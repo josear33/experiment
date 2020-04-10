@@ -47,7 +47,7 @@
 		<dependency>
 			<groupId>org.springframework.kafka</groupId>
 			<artifactId>spring-kafka-test</artifactId>
-						<exclusions>
+			<exclusions>
 				<exclusion>
 					<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-scala -->
 					<groupId>com.fasterxml.jackson.module</groupId>
@@ -121,7 +121,6 @@
 			<artifactId>spark-streaming-kafka-0-10_2.11</artifactId>
 			<version>2.4.5</version>
 		</dependency>
-<<<<<<< HEAD
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -129,8 +128,6 @@
 			<version>2.10.3</version>
 		</dependency>
 
-=======
->>>>>>> refs/remotes/origin/master
 	</dependencies>
 
 	<build>

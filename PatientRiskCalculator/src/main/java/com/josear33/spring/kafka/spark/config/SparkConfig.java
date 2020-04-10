@@ -1,11 +1,7 @@
 package com.josear33.spring.kafka.spark.config;
 
 import org.apache.spark.SparkConf;
-<<<<<<< HEAD
 import org.apache.spark.ml.clustering.KMeans;
-import org.apache.spark.ml.clustering.KMeansModel;
-=======
->>>>>>> refs/remotes/origin/master
 import org.apache.spark.sql.SQLContext;
 import org.apache.spark.sql.SparkSession;
 import org.springframework.beans.factory.annotation.Value;

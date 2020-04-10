@@ -41,10 +41,10 @@ public class SparkConfig {
 		return new KMeans().setK(2).setSeed(1L);
 	}
 
-	/*@Bean
-	public JavaSparkContext sc() {
-		return new JavaSparkContext(conf());
-	}*/
+	@Bean
+	public KMeansModel trainedModel() {
+		return KMeansModel.load("");
+	}
 	
 	@Bean
 	public SQLContext sqlc() {

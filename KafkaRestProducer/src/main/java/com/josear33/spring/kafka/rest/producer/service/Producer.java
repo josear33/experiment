@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.josear33.spring.kafka.rest.producer.constants.ApplicationConstants;
 import com.josear33.spring.kafka.rest.producer.model.Persona;
 
 @Service
@@ -16,7 +17,6 @@ import com.josear33.spring.kafka.rest.producer.model.Persona;
 public class Producer {
 
 	private static final Logger logger = LoggerFactory.getLogger(Producer.class);
-	private static final String TOPIC = "users";
 
 	@Autowired
 	private ObjectMapper objectMapper;
@@ -26,13 +26,13 @@ public class Producer {
 
 	public void sendMessage(String message) {
 		logger.info(String.format("#### -> Producing message -> %s", message));
-		this.kafkaTemplate.send(TOPIC, message);
+		this.kafkaTemplate.send(ApplicationConstants.TOPIC_PATIENT, message);
 	}
 
 	public void sendDiagFollowup(Persona persona) {
 		try {
 			logger.info(String.format("#### -> Producing message -> %s", objectMapper.writeValueAsString(persona)));
-			this.kafkaTemplate.send(TOPIC,  objectMapper.writeValueAsString(persona));
+			this.kafkaTemplate.send(ApplicationConstants.TOPIC_PATIENT,  objectMapper.writeValueAsString(persona));
 		} catch (JsonProcessingException e) {
 			logger.error(e.getStackTrace().toString());			
 		} finally {

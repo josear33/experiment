@@ -18,14 +18,14 @@ public class KafkaConsumer {
 	private final Logger logger = LoggerFactory.getLogger(KafkaConsumer.class);
 
 
-	@KafkaListener(topics = "calculateRisk", groupId = "group_id")
+	@KafkaListener(topics = "${kafka.topic.cluster.predict}", groupId = "${spring.kafka.consumer.group-id}")
 	public void calculateRisk(String message) throws IOException {
 		logger.info(String.format("#### -> Consuming message -> %s", message));
 		producerService.publishCalculatedRisk(riskService.getRiskScoring(message));
 
 	}
 	
-	@KafkaListener(topics = "trainModel", groupId = "group_id")
+	@KafkaListener(topics = "${kafka.topic.cluster.train}", groupId = "${spring.kafka.consumer.group-id}")
 	public void trainModel(String message) throws IOException {
 		logger.info(String.format("#### -> Consuming message -> %s", message));
 		producerService.publishTrainModel(riskService.trainModel(message));

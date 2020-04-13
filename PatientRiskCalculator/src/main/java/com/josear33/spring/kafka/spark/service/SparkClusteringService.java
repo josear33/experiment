@@ -4,7 +4,6 @@ import org.apache.spark.ml.Pipeline;
 import org.apache.spark.ml.PipelineModel;
 import org.apache.spark.ml.PipelineStage;
 import org.apache.spark.ml.clustering.KMeans;
-import org.apache.spark.ml.clustering.KMeansModel;
 import org.apache.spark.ml.feature.VectorAssembler;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
@@ -19,6 +18,9 @@ public class SparkClusteringService {
 
 	@Autowired
 	private KMeans model;
+
+	@Autowired
+	private SQLContext sqlc;
 
 	private PipelineModel trainedModel = null;
 
@@ -44,11 +46,13 @@ public class SparkClusteringService {
 //		OneHotEncoderEstimator gencoder = new OneHotEncoderEstimator().setInputCols(new String[] { "ciudadIndex" })
 //				.setOutputCols(new String[] { "ciudadVec" });
 		logger.info("Begin training");
+
 		VectorAssembler assembler = new VectorAssembler()
 				.setInputCols(new String[] { "edad", "fiebre", "covidPositivo", "tos", "mucosidad", "sequedad" })
 				.setOutputCol("features");
 		Pipeline pipe = new Pipeline().setStages(new PipelineStage[] { assembler, model });
-		trainedModel = pipe.fit(dataset);
+		trainedModel = pipe.fit(dataset.drop("features").drop("prediction").dropDuplicates());
 		logger.info("Model trained");
+
 	}
 }

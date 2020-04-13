@@ -21,11 +21,11 @@ public class KafkaProducer {
 
 	public void publishCalculatedRisk(String persona) {
 		logger.info(String.format("#### -> Producing message -> %s", persona));
-		this.kafkaTemplate.send(ApplicationConstants.RISKTOPIC, persona);
+		this.kafkaTemplate.send(ApplicationConstants.TOPIC_CLUSTER, persona);
 	}
 	
 	public void publishTrainModel(String dataset) {
 		logger.info(String.format("#### -> Producing message -> %s", dataset));
-		this.kafkaTemplate.send(ApplicationConstants.TRAINMODEL, ApplicationConstants.MODELTRAINED);
+		this.kafkaTemplate.send(ApplicationConstants.TOPIC_TRAINMODEL, ApplicationConstants.MODELTRAINED);
 	}
 }

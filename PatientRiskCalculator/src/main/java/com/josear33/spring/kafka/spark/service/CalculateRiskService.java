@@ -21,6 +21,8 @@ public class CalculateRiskService {
 	@Autowired
 	private SparkClusteringService sparkClusteringService;
 
+	private List<String> messageBuffer = new ArrayList<String>();
+
 	public String getRiskScoring(String persona) {
 		logger.info("Begin clustering");
 		List<String> data = new ArrayList<String>();
@@ -28,11 +30,18 @@ public class CalculateRiskService {
 		Dataset<String> df = sqlc.createDataset(data, Encoders.STRING());
 		return sparkClusteringService.clusterPredict(sqlc.read().json(df)).toDF().toJSON().first();
 	}
-	
+
 	public String trainModel(String persona) {
 //		Dataset<Row> message = sqlContext.read().format("kafka").option("kafka.bootstrap.servers", "localhost:9092")
 //				.option("subscribe", "users").load();
-		logger.info("Begin training");
+		messageBuffer.add(persona);
+		if (messageBuffer.size() == 100) {
+			logger.info("Begin training");
+			Dataset<String> df = sqlc.createDataset(messageBuffer, Encoders.STRING());
+			sparkClusteringService.clusterTrain(sqlc.read().json(df).toDF());
+			messageBuffer.clear();
+			logger.info("Training finished");
+		}
 		return "SUCCESS";
 	}
 }

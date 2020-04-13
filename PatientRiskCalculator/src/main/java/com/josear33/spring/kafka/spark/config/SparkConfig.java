@@ -37,7 +37,7 @@ public class SparkConfig {
 	
 	@Bean
 	public KMeans model() {
-		return new KMeans().setK(2).setSeed(1L);
+		return new KMeans().setK(3).setSeed(1L);
 	}
 
 	@Bean

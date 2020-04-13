@@ -34,6 +34,7 @@ public class CalculateRiskService {
 	public String trainModel(String persona) {
 //		Dataset<Row> message = sqlContext.read().format("kafka").option("kafka.bootstrap.servers", "localhost:9092")
 //				.option("subscribe", "users").load();
+		String res = "STAGED";
 		messageBuffer.add(persona);
 		if (messageBuffer.size() == 100) {
 			logger.info("Begin training");
@@ -41,7 +42,8 @@ public class CalculateRiskService {
 			sparkClusteringService.clusterTrain(sqlc.read().json(df).toDF());
 			messageBuffer.clear();
 			logger.info("Training finished");
+			res="SUCCESS";
 		}
-		return "SUCCESS";
+		return res;
 	}
 }
